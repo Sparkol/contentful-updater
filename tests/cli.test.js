@@ -64,17 +64,13 @@ describe('CLI', () => {
 
   it('should run a migration', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
-
     await cli(accessToken, spaceId, environmentId);
-
     expect(runMigrationSpy.called).to.be.true;
   });
 
   it('should update the store after a successful migration', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
-
     await cli(accessToken, spaceId, environmentId);
-
     expect(setPositionSpy.called).to.be.true;
   });
 });
