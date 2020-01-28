@@ -1,4 +1,4 @@
-const currentPosition = 0;
+const currentPosition = -1;
 
 module.exports = {
   sys: {

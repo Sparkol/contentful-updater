@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 
-const { contentfulStub, createUiExtensionSpy } = require('./helper');
+const { contentfulStub, createUiExtensionSpy } = require('../helper');
 
 let sandbox;
 let store;
@@ -17,7 +17,7 @@ describe('State store', () => {
     });
 
     let { accessToken, spaceId, env } = process.env;
-    store = await proxyquire('../lib/store', {
+    store = await proxyquire('../../lib/store', {
       'contentful-management': contentfulStub
     })(accessToken, spaceId, env);
   });
@@ -37,10 +37,9 @@ describe('State store', () => {
     expect(createUiExtensionSpy.calledOnce).to.be.true;
   });
 
-  it('should return an update position of 0 after inital creation', async () => {
+  it('should return the next update position of 0 after inital creation', async () => {
     await store.ensureStateStore();
-    let position = await store.getPosition();
-    //console.log('out', position);
+    let position = await store.getNextPosition();
     expect(position).to.eq(0);
   });
 

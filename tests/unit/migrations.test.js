@@ -8,7 +8,7 @@ const path = require('path');
 let scriptError = new Error('Could not run migration');
 
 const requireContentfulMigration = (runMigrationFn, accessToken, spaceId, env) => {
-  return proxyquire('../lib/migrations', {
+  return proxyquire('../../lib/migrations', {
     'contentful-migration/built/bin/cli': {
       runMigration: runMigrationFn
     }
@@ -55,7 +55,7 @@ describe('Migrations', () => {
     let migrationCalledWith = runMigrationSpy.args[0];
 
     expect(runMigrationSpy.callCount).to.eq(1);
-    expect(migrationCalledWith[0].filePath).to.eq(path.join(__dirname, '..', 'tests/fixtures/scripts/002-update3.js'));
+    expect(migrationCalledWith[0].filePath).to.eq(path.join(__dirname, '..', 'fixtures/scripts/002-update3.js'));
   });
 
   it('should execute migrations in order', async () => {
@@ -67,14 +67,12 @@ describe('Migrations', () => {
     expect(runMigrationSpy.callCount).to.eq(3);
 
     expect(runMigrationSpy.args[0][0].filePath).to.eq(
-      path.join(__dirname, '..', 'tests/fixtures/scripts/000-update1.js')
+      path.join(__dirname, '..', 'fixtures/scripts/000-create-page-content-type.js')
     );
     expect(runMigrationSpy.args[1][0].filePath).to.eq(
-      path.join(__dirname, '..', 'tests/fixtures/scripts/001-update2.js')
+      path.join(__dirname, '..', 'fixtures/scripts/001-update-page-content-type.js')
     );
-    expect(runMigrationSpy.args[2][0].filePath).to.eq(
-      path.join(__dirname, '..', 'tests/fixtures/scripts/002-update3.js')
-    );
+    expect(runMigrationSpy.args[2][0].filePath).to.eq(path.join(__dirname, '..', 'fixtures/scripts/002-update3.js'));
   });
 
   it('should return the position of the last successful migration', async () => {
@@ -96,7 +94,7 @@ describe('Migrations', () => {
     await migration.runMigration(2, './tests/fixtures/scripts/');
 
     // https://www.valentinog.com/blog/throw-async/
-    await expect(migration.runMigration(0, './tests/fixtures/scripts/')).to.be.eventually.rejectedWith(scriptError);
+    await expect(migration.runMigration(1, './tests/fixtures/scripts/')).to.be.eventually.rejectedWith(scriptError);
   });
 
   it('should return the position of a failed update when an invalid update is encountered', async () => {

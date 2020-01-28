@@ -30,6 +30,7 @@ On successful update, the tool will update a state store which is stored in Cont
 
 | Option        | Decription    |
 | ------------- | ------------- |
-| `-s, --space-id <space-id>` | Spectify the Contentful space |
+| `-s, --space-id <space-id>` | *REQUIRED* Spectify the Contentful space |
+| `-f, --folder <folder-path>` | *REQUIRED* Path to the folder containing the scripts |
 | `-e, --environment-id <environment-id>` | Specify the Contentful environment (default "master") |
-| `-f, --run-from <index>` | Run from a specific index rather than using the state store |
+| `-r, --run-from <index>` | Run from a specific index rather than using the state store |

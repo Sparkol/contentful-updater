@@ -11,6 +11,7 @@ let ensureStateStoreSpy = sinon.spy();
 let getPositionSpy = sinon.spy();
 let setPositionSpy = sinon.spy();
 let runMigrationSpy = sinon.spy();
+let getNextPositionSpy = sinon.spy();
 
 describe('CLI', () => {
   beforeEach(async () => {
@@ -22,11 +23,12 @@ describe('CLI', () => {
       env: 'master'
     });
 
-    cli = proxyquire('../lib/cli', {
+    cli = proxyquire('../../lib/cli', {
       './store': () => {
         return {
           ensureStateStore: ensureStateStoreSpy,
           getPosition: getPositionSpy,
+          getNextPosition: getNextPositionSpy,
           setPosition: setPositionSpy
         };
       },
@@ -45,7 +47,7 @@ describe('CLI', () => {
   it('should not use a store if a `runFrom` option has been specified', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
 
-    await cli(accessToken, spaceId, environmentId, 1);
+    await cli(accessToken, spaceId, './', environmentId, 1);
 
     expect(ensureStateStoreSpy.called).to.be.false;
     expect(getPositionSpy.called).to.be.false;
@@ -55,22 +57,22 @@ describe('CLI', () => {
   it('should use a store if a `runFrom` option has not been specified', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
 
-    await cli(accessToken, spaceId, environmentId);
+    await cli(accessToken, spaceId, './', environmentId);
 
     expect(ensureStateStoreSpy.called).to.be.true;
-    expect(getPositionSpy.called).to.be.true;
+    expect(getNextPositionSpy.called).to.be.true;
     expect(setPositionSpy.called).to.be.true;
   });
 
   it('should run a migration', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
-    await cli(accessToken, spaceId, environmentId);
+    await cli(accessToken, spaceId, './', environmentId);
     expect(runMigrationSpy.called).to.be.true;
   });
 
   it('should update the store after a successful migration', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
-    await cli(accessToken, spaceId, environmentId);
+    await cli(accessToken, spaceId, './', environmentId);
     expect(setPositionSpy.called).to.be.true;
   });
 });
