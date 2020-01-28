@@ -1,5 +1,5 @@
 const chai = require('chai');
-let { expect, assert } = chai;
+let { expect } = chai;
 chai.use(require('chai-as-promised'));
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
@@ -28,6 +28,22 @@ describe('Migrations', () => {
 
   afterEach(() => {
     sandbox.restore();
+  });
+
+  it('should throw an error if a Contentful access token is not provided', async () => {
+    let { spaceId, env } = process.env;
+
+    expect(() => {
+      requireContentfulMigration(sinon.spy(), '', spaceId, env);
+    }).to.throw('Expected Contentful access token');
+  });
+
+  it('should throw an error if a Contentful space id is not provided', async () => {
+    let { accessToken, env } = process.env;
+
+    expect(() => {
+      requireContentfulMigration(sinon.spy(), accessToken, '', env);
+    }).to.throw('Expected Contentful space id');
   });
 
   it('should only include migration files starting from the current index', async () => {
