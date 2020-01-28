@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const program = require('commander');
 const run = require('./lib/cli');
 let { ACCESS_TOKEN } = process.env;

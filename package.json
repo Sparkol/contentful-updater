@@ -2,12 +2,11 @@
   "name": "contentful-migrate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha 'tests/**/*.test.js'"
   },
   "bin": {
-    "contentful-update": "./cli.js"
+    "contentful-migrate": "./cli.js"
   },
   "author": "",
   "license": "ISC",
