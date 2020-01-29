@@ -55,7 +55,7 @@ describe('Migrations', () => {
     let migrationCalledWith = runMigrationSpy.args[0];
 
     expect(runMigrationSpy.callCount).to.eq(1);
-    expect(migrationCalledWith[0].filePath).to.eq(path.join(__dirname, '..', 'fixtures/scripts/002-update3.js'));
+    expect(migrationCalledWith[0].filePath).to.eq(path.join(__dirname, '..', 'fixtures/scripts/002-add-slug-field.js'));
   });
 
   it('should execute migrations in order', async () => {
@@ -72,7 +72,9 @@ describe('Migrations', () => {
     expect(runMigrationSpy.args[1][0].filePath).to.eq(
       path.join(__dirname, '..', 'fixtures/scripts/001-update-page-content-type.js')
     );
-    expect(runMigrationSpy.args[2][0].filePath).to.eq(path.join(__dirname, '..', 'fixtures/scripts/002-update3.js'));
+    expect(runMigrationSpy.args[2][0].filePath).to.eq(
+      path.join(__dirname, '..', 'fixtures/scripts/002-add-slug-field.js')
+    );
   });
 
   it('should return the position of the last successful migration', async () => {
