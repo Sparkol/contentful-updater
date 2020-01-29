@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "NODE_ENV=test mocha 'tests/**/*.test.js'"
+    "test": "NODE_ENV=test mocha 'tests/**/*.test.js'",
+    "format": "prettier --check \"**/*.js\"",
+    "lint": "eslint ./ --ignore-pattern .gitignore"
   },
   "bin": {
     "contentful-migrate": "./cli.js"
@@ -20,8 +22,10 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "eslint": "^6.8.0",
     "mocha": "^7.0.0",
     "mockery": "^2.1.0",
+    "prettier": "^1.19.1",
     "proxyquire": "^2.1.3",
     "rewire": "^4.0.1",
     "sinon": "^8.1.1"
