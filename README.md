@@ -18,6 +18,7 @@ On successful update, the tool will update a state store which is stored in Cont
 ## Installation
 
 - Clone the reop
+- `$ nvm use`
 - `$ npm link`
 
 ## Usage
