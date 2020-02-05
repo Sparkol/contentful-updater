@@ -46,6 +46,15 @@ describe('Migrations', () => {
     }).to.throw('Expected Contentful space id');
   });
 
+  it('should only run migration scripts within files that are prefixed by three digits', async () => {
+    let { accessToken, spaceId, env } = process.env;
+    let runMigrationSpy = sinon.spy();
+    let migration = requireContentfulMigration(runMigrationSpy, accessToken, spaceId, env);
+    await migration.runMigration(0, './tests/fixtures/scripts/');
+
+    expect(runMigrationSpy.callCount).to.eq(3);
+  });
+
   it('should only include migration files starting from the current index', async () => {
     let { accessToken, spaceId, env } = process.env;
     let runMigrationSpy = sinon.spy();
