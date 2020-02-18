@@ -1,5 +1,5 @@
 {
-  "name": "contentful-migrate",
+  "name": "contentful-update",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -8,7 +8,7 @@
     "lint": "eslint ./ --ignore-pattern .gitignore"
   },
   "bin": {
-    "contentful-migrate": "./cli.js"
+    "contentful-update": "./cli.js"
   },
   "author": "",
   "license": "ISC",

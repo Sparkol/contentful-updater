@@ -24,7 +24,7 @@ On successful update, the tool will update a state store which is stored in Cont
 ## Usage
 
 - Generate a content management access token [see documentation](https://www.contentful.com/developers/docs/references/authentication/).
-- `$ ACCESS_TOKEN=<your-token> contentful-migrate <options>`
+- `$ ACCESS_TOKEN=<your-token> contentful-update <options>`
 
 ### Commandline Options
 
