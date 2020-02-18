@@ -13,6 +13,28 @@ let setPositionSpy = sinon.spy();
 let runMigrationSpy = sinon.spy();
 let getNextPositionSpy = sinon.spy();
 
+const runMigrationMock = () => {
+  return Promise.resolve(1);
+};
+
+const getCliFunction = (runMigrationFunction = runMigrationSpy) => {
+  return proxyquire('../../lib/cli', {
+    './store': () => {
+      return {
+        ensureStateStore: ensureStateStoreSpy,
+        getPosition: getPositionSpy,
+        getNextPosition: getNextPositionSpy,
+        setPosition: setPositionSpy
+      };
+    },
+    './migrations': () => {
+      return {
+        runMigration: runMigrationFunction
+      };
+    }
+  });
+};
+
 describe('CLI', () => {
   beforeEach(async () => {
     sandbox = sinon.createSandbox();
@@ -22,22 +44,6 @@ describe('CLI', () => {
       spaceId: '0123456',
       env: 'master'
     });
-
-    cli = proxyquire('../../lib/cli', {
-      './store': () => {
-        return {
-          ensureStateStore: ensureStateStoreSpy,
-          getPosition: getPositionSpy,
-          getNextPosition: getNextPositionSpy,
-          setPosition: setPositionSpy
-        };
-      },
-      './migrations': () => {
-        return {
-          runMigration: runMigrationSpy
-        };
-      }
-    });
   });
 
   afterEach(() => {
@@ -46,7 +52,7 @@ describe('CLI', () => {
 
   it('should not use a store if a `runFrom` option has been specified', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
-
+    cli = getCliFunction();
     await cli(accessToken, spaceId, './', environmentId, 1);
 
     expect(ensureStateStoreSpy.called).to.be.false;
@@ -56,7 +62,7 @@ describe('CLI', () => {
 
   it('should use a store if a `runFrom` option has not been specified', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
-
+    cli = getCliFunction(runMigrationMock);
     await cli(accessToken, spaceId, './', environmentId);
 
     expect(ensureStateStoreSpy.called).to.be.true;
@@ -66,12 +72,14 @@ describe('CLI', () => {
 
   it('should run a migration', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
+    cli = getCliFunction();
     await cli(accessToken, spaceId, './', environmentId);
     expect(runMigrationSpy.called).to.be.true;
   });
 
   it('should update the store after a successful migration', async () => {
     let { accessToken, spaceId, environmentId } = process.env;
+    cli = getCliFunction(runMigrationMock);
     await cli(accessToken, spaceId, './', environmentId);
     expect(setPositionSpy.called).to.be.true;
   });
