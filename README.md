@@ -17,7 +17,7 @@ On successful update, the tool will update a state store which is stored in Cont
 
 ## Installation
 
-- Clone the reop
+- `$ npm install -g Sparkol/contentful-updater`
 - `$ nvm use`
 - `$ npm link`
 
