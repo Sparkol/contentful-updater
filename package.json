@@ -16,6 +16,7 @@
     "commander": "5.1.0",
     "contentful-management": "5.27.3",
     "contentful-migration": "1.1.14",
+    "glob": "^7.1.6",
     "glob-promise": "^3.4.0",
     "winston": "3.3.3"
   },
