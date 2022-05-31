@@ -1,6 +1,6 @@
 {
-  "name": "contentful-update",
-  "version": "1.0.0",
+  "name": "@sparkol/contentful-update",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "test": "NODE_ENV=test mocha 'tests/**/*.test.js'",
